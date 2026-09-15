@@ -1,0 +1,615 @@
+<title>NFL and Poker 2026</title>
+<style>
+:root{
+  --page:#F5F6F7;
+  --card:#FFFFFF;
+  --card-2:#FAFAFB;
+  --ink:#232A31;
+  --ink-2:#5B636A;
+  --ink-3:#828A93;
+  --line:#E0E4E9;
+  --line-2:#CDD2D7;
+  --blue:#0063EB;
+  --blue-soft:#EAF1FE;
+  --purple:#6001D2;
+  --pos:#017B3E;
+  --neg:#C5221F;
+  --g1:#9C7508; --g1-bg:#FCF3DB; --g1-line:#E4CB8C;
+  --g2:#6B737B; --g2-bg:#F1F3F5; --g2-line:#CBD1D7;
+  --g3:#96581F; --g3-bg:#FAEEE4; --g3-line:#E2BE9E;
+  --shadow:0 1px 2px rgba(35,42,49,.08);
+  --radius:8px;
+  --sans:"YahooSans VF","Yahoo Sans","Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0F1418; --card:#171D22; --card-2:#1C242A;
+    --ink:#E9ECEF; --ink-2:#9AA3AB; --ink-3:#7B858D;
+    --line:#2A333A; --line-2:#3B454D;
+    --blue:#4D9AFF; --blue-soft:#14243A; --purple:#B18AFF;
+    --g1:#E3BE5E; --g1-bg:#2E2510; --g1-line:#604C18;
+    --g2:#BFC7CF; --g2-bg:#232A30; --g2-line:#46505A;
+    --g3:#DC9E6F; --g3-bg:#2F2113; --g3-line:#66452A;
+    --pos:#3FC97D; --neg:#FF7269;
+    --shadow:0 1px 2px rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --page:#0F1418; --card:#171D22; --card-2:#1C242A;
+  --ink:#E9ECEF; --ink-2:#9AA3AB; --ink-3:#7B858D;
+  --line:#2A333A; --line-2:#3B454D;
+  --blue:#4D9AFF; --blue-soft:#14243A; --purple:#B18AFF;
+  --g1:#E3BE5E; --g1-bg:#2E2510; --g1-line:#604C18;
+  --g2:#BFC7CF; --g2-bg:#232A30; --g2-line:#46505A;
+  --g3:#DC9E6F; --g3-bg:#2F2113; --g3-line:#66452A;
+  --pos:#3FC97D; --neg:#FF7269;
+  --shadow:0 1px 2px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.45;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ---------- top chrome ---------- */
+.topbar{background:var(--card);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:10px;height:48px}
+.brand{font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--purple)}
+.brand span{color:var(--ink);font-weight:700}
+.topbar .sep{width:1px;height:18px;background:var(--line)}
+.topbar .season{font-size:12px;color:var(--ink-2)}
+
+.leaguehead{background:var(--card);border-bottom:1px solid var(--line)}
+.leaguehead .wrap{padding-top:20px;padding-bottom:0}
+.crest{display:flex;align-items:center;gap:12px}
+.crest .badge{width:44px;height:44px;border-radius:50%;background:var(--purple);color:#fff;
+  display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:-.02em;flex:none}
+.leaguehead h1{font-size:24px}
+.leaguehead .sub{font-size:13px;color:var(--ink-2);margin-top:1px}
+
+/* ---------- tabs (Yahoo underline) ---------- */
+.tabs{display:flex;gap:26px;margin-top:16px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{appearance:none;background:none;border:none;padding:0 0 11px;font:inherit;font-size:14px;
+  font-weight:600;color:var(--ink-2);cursor:pointer;white-space:nowrap;
+  border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--blue)}
+.tab:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:2px}
+
+main{padding:20px 0 64px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.card > h2{font-size:15px;padding:13px 16px;border-bottom:1px solid var(--line);
+  background:var(--card-2)}
+.card > h2 .hint{float:right;font-size:12px;font-weight:400;color:var(--ink-2)}
+.pad{padding:14px 16px}
+
+/* ---------- top 3 ---------- */
+.top3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+@media(max-width:640px){.top3{grid-template-columns:1fr}}
+.win{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:13px 14px;display:flex;gap:11px;align-items:flex-start}
+.medal{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;
+  font-size:12px;font-weight:700}
+.win.p1{border-color:var(--g1-line)}
+.win.p1 .medal{background:var(--g1-bg);color:var(--g1);box-shadow:inset 0 0 0 1px var(--g1-line)}
+.win.p2{border-color:var(--g2-line)}
+.win.p2 .medal{background:var(--g2-bg);color:var(--g2);box-shadow:inset 0 0 0 1px var(--g2-line)}
+.win.p3{border-color:var(--g3-line)}
+.win.p3 .medal{background:var(--g3-bg);color:var(--g3);box-shadow:inset 0 0 0 1px var(--g3-line)}
+.win .nm{font-weight:700;font-size:15px;line-height:1.2;word-break:break-word}
+.win .ln{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.win .ln b{color:var(--ink);font-weight:600}
+
+/* ---------- table ---------- */
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:420px}
+th{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2);
+  text-align:right;padding:9px 12px;background:var(--card-2);border-bottom:1px solid var(--line);
+  white-space:nowrap;position:sticky;top:0}
+th.l,td.l{text-align:left}
+td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:right;vertical-align:middle;
+  font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:var(--card-2)}
+.pos{width:34px;color:var(--ink-3);font-size:13px}
+tr.inmoney .pos{color:var(--blue);font-weight:700}
+tr.p1 .pos{color:var(--g1);font-weight:700}
+tr.p2 .pos{color:var(--g2);font-weight:700}
+tr.p3 .pos{color:var(--g3);font-weight:700}
+.team{font-weight:600;font-size:14.5px;line-height:1.2;font-variant-numeric:normal}
+.pts{font-weight:700;font-size:14.5px;white-space:nowrap}
+.bar{width:150px;min-width:110px;padding-left:0}
+.track{display:block;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.fill{display:block;height:100%;border-radius:3px;background:var(--line-2)}
+tr.inmoney .fill{background:var(--blue)}
+tr.p1 .fill{background:var(--g1)}
+tr.p2 .fill{background:var(--g2)}
+tr.p3 .fill{background:var(--g3)}
+.money{white-space:nowrap;font-size:13.5px}
+.money.zero{color:var(--ink-3)}
+.pos-v{color:var(--pos);font-weight:600}
+.neg-v{color:var(--neg)}
+.flat-v{color:var(--ink-3)}
+tr.cut td{padding:0;border-bottom:none;background:var(--card)}
+.cutline{display:flex;align-items:center;gap:8px;padding:6px 12px;font-size:11px;font-weight:600;
+  letter-spacing:.02em;text-transform:uppercase}
+.cutline::after{content:"";flex:1;border-top:1px dashed currentColor;opacity:.6}
+.cut-money .cutline{color:var(--blue)}
+.cut-free .cutline{color:var(--ink-3)}
+@media(max-width:700px){
+  th.bar,td.bar{display:none}
+  td,th{padding:10px 9px}
+  .team{font-size:14px}
+}
+
+/* ---------- pastas ---------- */
+.folder{margin-bottom:14px}
+.folder-tabs{display:flex;gap:3px;overflow-x:auto;scrollbar-width:none;padding-top:2px}
+.folder-tabs::-webkit-scrollbar{display:none}
+.ftab{appearance:none;font:inherit;font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;
+  padding:9px 16px 8px;color:var(--ink-2);background:var(--card-2);
+  border:1px solid var(--line);border-radius:8px 8px 0 0;margin-bottom:-1px;position:relative}
+.ftab:hover{color:var(--ink)}
+.ftab[aria-selected="true"]{background:var(--card);color:var(--ink);z-index:2;
+  border-bottom-color:var(--card);box-shadow:inset 0 3px 0 var(--blue)}
+.ftab:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+.folder-body{background:var(--card);border:1px solid var(--line);border-radius:0 8px 8px 8px;
+  box-shadow:var(--shadow);overflow:hidden;position:relative}
+
+/* ---------- escalações ---------- */
+.lineups{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.lineups.solo{grid-template-columns:1fr}
+@media(max-width:700px){.lineups{grid-template-columns:1fr}}
+.lu{border-right:1px solid var(--line)}
+.lu:last-child{border-right:none}
+@media(max-width:700px){.lu{border-right:none;border-bottom:1px solid var(--line)}
+  .lu:last-child{border-bottom:none}}
+.lu-head{padding:12px 16px;border-bottom:1px solid var(--line);display:flex;
+  justify-content:space-between;align-items:baseline;gap:10px}
+.lu-head .t{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+.lu-head .o{font-size:14.5px;font-weight:700;margin-top:2px;word-break:break-word}
+.lu-head .tot{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.lu.opt .lu-head .tot{color:var(--g1)}
+.lu-row{display:flex;align-items:center;gap:10px;padding:7px 16px;border-bottom:1px solid var(--line);
+  font-size:13.5px}
+.lu-row:last-child{border-bottom:none}
+.slot{flex:none;width:40px;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-align:center;
+  padding:3px 0;border-radius:3px;background:var(--card-2);color:var(--ink-2);
+  box-shadow:inset 0 0 0 1px var(--line)}
+.lu-row .nmp{flex:1;min-width:0;font-weight:600;overflow-wrap:anywhere}
+.lu-row .nmp span{font-weight:400;color:var(--ink-3);font-size:12px;margin-left:5px}
+.lu-row .sal{flex:none;font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;
+  min-width:22px;text-align:right}
+.lu-row .pp{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;
+  min-width:44px;text-align:right}
+.lu-head .cap{font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;text-align:right;
+  margin-top:1px;font-weight:400}
+.lu-head > div:last-child{text-align:right}
+.lu-row.hit .slot{background:var(--g1-bg);color:var(--g1);box-shadow:inset 0 0 0 1px var(--g1-line)}
+.lu-foot{padding:10px 16px;font-size:12.5px;color:var(--ink-2);background:var(--card-2);
+  border-top:1px solid var(--line)}
+.lu-foot b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+
+/* ---------- melhores por posição ---------- */
+.tp-head{padding:9px 16px 8px;font-size:11px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink-2);background:var(--card-2);
+  border-bottom:1px solid var(--line);border-top:1px solid var(--line)}
+.topgrp:first-child .tp-head{border-top:none}
+.lu-row .rk{flex:none;width:30px;text-align:center;font-size:11px;font-weight:700;
+  padding:3px 0;border-radius:3px;background:var(--card-2);color:var(--ink-3);
+  box-shadow:inset 0 0 0 1px var(--line)}
+.lu-row.r1 .rk{background:var(--g1-bg);color:var(--g1);box-shadow:inset 0 0 0 1px var(--g1-line)}
+.lu-row.r2 .rk{background:var(--g2-bg);color:var(--g2);box-shadow:inset 0 0 0 1px var(--g2-line)}
+.lu-row.r3 .rk{background:var(--g3-bg);color:var(--g3);box-shadow:inset 0 0 0 1px var(--g3-line)}
+.topgrp .lu-row:last-child{border-bottom:none}
+
+/* ---------- stats ---------- */
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin:0}
+.stat{padding:12px 16px;border-right:1px solid var(--line);border-top:1px solid var(--line)}
+.stat dt{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+.stat dd{margin:3px 0 0;font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;
+  line-height:1.2;word-break:break-word}
+.stat dd small{display:block;font-size:11.5px;font-weight:400;color:var(--ink-2);margin-top:2px;
+  font-variant-numeric:normal}
+
+.note{font-size:13px;color:var(--ink-2);line-height:1.5}
+.note b{color:var(--ink);font-weight:600}
+.note + .note{margin-top:7px}
+
+/* ---------- rules ---------- */
+.rules{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:640px){.rules{grid-template-columns:1fr}}
+.rulecol{padding:14px 16px;border-right:1px solid var(--line)}
+.rulecol:last-child{border-right:none}
+.rulecol h3{font-size:13px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-2)}
+.rulecol .pot{font-size:12.5px;color:var(--ink-3);margin:2px 0 9px}
+.rulerow{display:flex;justify-content:space-between;gap:10px;padding:6px 0;
+  border-bottom:1px solid var(--line);font-size:13.5px;font-variant-numeric:tabular-nums}
+.rulerow:last-child{border-bottom:none}
+.rulerow .k{color:var(--ink-2)}
+.rulerow .v{font-weight:600}
+.rulerow .v em{font-style:normal;font-weight:400;color:var(--ink-3)}
+
+footer{color:var(--ink-3);font-size:12.5px;line-height:1.55;padding:0 0 10px}
+footer p + p{margin-top:6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="topbar"><div class="wrap">
+  <span class="brand">Fantasy<span>&nbsp;Liga</span></span>
+  <span class="sep"></span>
+  <span class="season">Yahoo DFS · Liga 154304 · Temporada 2026</span>
+</div></div>
+
+<header class="leaguehead"><div class="wrap">
+  <div class="crest">
+    <div class="badge">NP</div>
+    <div>
+      <h1>NFL and Poker 2026</h1>
+      <p class="sub" id="sub"></p>
+    </div>
+  </div>
+  <div class="tabs" role="tablist" id="tabs"></div>
+</div></header>
+
+<main><div class="wrap">
+  <div id="panel"></div>
+</div></main>
+
+<script>
+/* ============================================================
+   PRÓXIMA SEMANA: copie um bloco de WEEKS e cole os pares
+   ["time", pontos]. Posição, prêmio, lucro e a aba Geral
+   são calculados automaticamente.
+
+   ESCALAÇÕES (opcional, por semana) — se "lineups" existir,
+   aparece o card "Times da rodada" logo abaixo da tabela:
+
+     lineups:{
+       best:{ owner:"BAYS", slots:[
+         {slot:"QB",  name:"Josh Allen",    team:"BUF", pts:28.40},
+         {slot:"RB",  name:"...",           team:"...", pts:0},
+         ...
+       ]},
+       optimal:{ slots:[ ...mesmo formato... ] }
+     }
+
+   O total de cada time é somado sozinho; os jogadores do time
+   perfeito que também estavam na escalação campeã ganham a
+   marca dourada. Pode entrar só "best" ou só "optimal".
+   ============================================================ */
+const CAP = 200;   // teto salarial do Yahoo DFS
+const LEAGUE = { entryWeek:30, entrySeason:150,
+  weeklyPrizes:[170,110,80,30,30], seasonPrizes:[1000,550,250,150,150] };
+
+const WEEKS = [
+  { n:1, label:"Semana 1", results:[
+    ["BAYS", 151.10],
+    ["v1tti", 128.44],
+    ["ZangROETHLISBERGER", 110.96],
+    ["MarcusjJr", 110.76],
+    ["Tudazul", 107.56],
+    ["Goiano", 106.70],
+    ["RaphaLuno", 105.80],
+    ["LuisHPs", 105.20],
+    ["jacenir-14BF9C", 104.60],
+    ["Yago", 92.66],
+    ["DarkRams", 86.26],
+    ["Andrev-OP38R", 84.92],
+    ["Pandajets", 80.34],
+    ["Andre_Luiz-R5BVL", 74.02]
+  ], lineups:{
+    best:{ owner:"BAYS", slots:[
+      {slot:"QB",   name:"Malik Willis",       team:"MIA", sal:24, pts:17.70},
+      {slot:"RB",   name:"Javonte Williams",   team:"DAL", sal:29, pts:21.70},
+      {slot:"RB",   name:"D'Andre Swift",      team:"CHI", sal:28, pts:31.90},
+      {slot:"WR",   name:"Jaxon Smith-Njigba", team:"SEA", sal:35, pts:22.20},
+      {slot:"WR",   name:"A.J. Brown",         team:"NE",  sal:26, pts:4.10},
+      {slot:"WR",   name:"Caleb Douglas",      team:"MIA", sal:12, pts:11.90},
+      {slot:"TE",   name:"Isaiah Likely",      team:"NYG", sal:16, pts:23.80},
+      {slot:"FLEX", name:"Emeka Egbuka",       team:"TB",  sal:20, pts:8.80},
+      {slot:"DEF",  name:"New York Jets",      team:"NYJ", sal:10, pts:9.00}
+    ]},
+    optimal:{ slots:[
+      {slot:"QB",   name:"Mitchell Trubisky",  team:"TEN", sal:20, pts:28.86},
+      {slot:"RB",   name:"Kenneth Walker",     team:"KC",  sal:35, pts:32.60},
+      {slot:"RB",   name:"D'Andre Swift",      team:"CHI", sal:28, pts:31.90},
+      {slot:"WR",   name:"Jalen Coker",        team:"CAR", sal:20, pts:29.80},
+      {slot:"WR",   name:"Christian Watson",   team:"GB",  sal:22, pts:29.70},
+      {slot:"WR",   name:"Justin Jefferson",   team:"MIN", sal:28, pts:27.20},
+      {slot:"TE",   name:"Isaiah Likely",      team:"NYG", sal:16, pts:23.80},
+      {slot:"FLEX", name:"David Montgomery",   team:"HOU", sal:20, pts:27.40},
+      {slot:"DEF",  name:"Cincinnati Bengals", team:"CIN", sal:11, pts:18.00}
+    ]}
+  }, tops:{
+    QB:[ {name:"Caleb Williams",      team:"CHI", sal:37, pts:37.26},
+         {name:"Josh Allen",          team:"BUF", sal:40, pts:35.66},
+         {name:"Bryce Young",         team:"CAR", sal:27, pts:32.44} ],
+    RB:[ {name:"Derrick Henry",       team:"BAL", sal:38, pts:34.80},
+         {name:"Kenneth Walker",      team:"KC",  sal:35, pts:32.60},
+         {name:"D'Andre Swift",       team:"CHI", sal:28, pts:31.90} ],
+    WR:[ {name:"Jalen Coker",         team:"CAR", sal:20, pts:29.80},
+         {name:"Christian Watson",    team:"GB",  sal:22, pts:29.70},
+         {name:"Justin Jefferson",    team:"MIN", sal:28, pts:27.20} ],
+    TE:[ {name:"Isaiah Likely",       team:"NYG", sal:16, pts:23.80},
+         {name:"Dallas Goedert",      team:"PHI", sal:19, pts:21.70},
+         {name:"Trey McBride",        team:"ARI", sal:28, pts:20.00} ],
+    DEF:[{name:"Cincinnati Bengals",  team:"CIN", sal:11, pts:18.00},
+         {name:"Pittsburgh Steelers", team:"PIT", sal:15, pts:18.00},
+         {name:"Las Vegas Raiders",   team:"LV",  sal:11, pts:13.00} ]
+  }}
+];
+
+const brl = n => n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:0,maximumFractionDigits:0});
+const pts = n => n.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const at = (i,t) => t[i] ?? 0;
+const el = (t,c,h) => { const e=document.createElement(t); if(c)e.className=c; if(h!=null)e.innerHTML=h; return e; };
+const sign = v => (v>0?"pos-v":v<0?"neg-v":"flat-v");
+const plus = v => (v>0?"+":"") + brl(v);
+
+function ranked(w){
+  return [...w.results].sort((a,b)=>b[1]-a[1]).map(([team,p],i)=>({
+    pos:i+1, team, points:p, prize:at(i,LEAGUE.weeklyPrizes),
+    net:at(i,LEAGUE.weeklyPrizes)-LEAGUE.entryWeek }));
+}
+function overall(){
+  const acc=new Map();
+  WEEKS.forEach(w=>ranked(w).forEach(r=>{
+    const a=acc.get(r.team) ?? {team:r.team,points:0,prizes:0,best:99,weeks:0,cashes:0};
+    a.points+=r.points; a.prizes+=r.prize; a.best=Math.min(a.best,r.pos); a.weeks++;
+    if(r.prize>0) a.cashes++;
+    acc.set(r.team,a);
+  }));
+  return [...acc.values()].sort((a,b)=>b.points-a.points).map((r,i)=>{
+    const invested=LEAGUE.entrySeason+LEAGUE.entryWeek*r.weeks;
+    const seasonPrize=at(i,LEAGUE.seasonPrizes);
+    return {...r,pos:i+1,invested,balance:r.prizes-invested,seasonPrize,
+      projected:r.prizes+seasonPrize-invested};
+  });
+}
+
+function card(title,hint,body){
+  const c=el("div","card");
+  c.append(el("h2",null, title + (hint?`<span class="hint">${hint}</span>`:"")));
+  c.append(body);
+  return c;
+}
+function strip(items){
+  const dl=el("dl","strip");
+  items.forEach(([k,v,s])=>{
+    const d=el("div","stat");
+    d.append(el("dt",null,k), el("dd",null, v + (s?`<small>${s}</small>`:"")));
+    dl.append(d);
+  });
+  return dl;
+}
+function topsPanel(tops){
+  const box=el("div");
+  Object.entries(tops).forEach(([pos,list])=>{
+    const g=el("div","topgrp");
+    g.append(el("p","tp-head",pos));
+    list.forEach((p,i)=>{
+      const r=el("div","lu-row r"+(i+1));
+      r.innerHTML=`<span class="rk">${i+1}º</span>
+        <span class="nmp">${p.name}${p.team?`<span>${p.team}</span>`:""}</span>
+        ${p.sal?`<span class="sal">${p.sal}</span>`:""}
+        <span class="pp">${pts(p.pts)}</span>`;
+      g.append(r);
+    });
+    box.append(g);
+  });
+  return box;
+}
+
+function folderCard(tabs){
+  const box=el("div","folder");
+  const strip=el("div","folder-tabs"); strip.setAttribute("role","tablist");
+  const body=el("div","folder-body");
+  tabs.forEach((t,i)=>{
+    const b=el("button","ftab",t.label);
+    b.type="button"; b.setAttribute("role","tab"); b.setAttribute("aria-selected", i===0?"true":"false");
+    b.addEventListener("click",()=>{
+      [...strip.children].forEach(x=>x.setAttribute("aria-selected",String(x===b)));
+      body.replaceChildren(t.build());
+    });
+    strip.append(b);
+  });
+  body.replaceChildren(tabs[0].build());
+  box.append(strip, body);
+  return box;
+}
+
+function lineupPanel(lu, kind, hits){
+  const p=el("div","lu"+(kind==="opt"?" opt":""));
+  const h=el("div","lu-head");
+  const left=el("div");
+  left.append(el("p","t", kind==="opt" ? "Melhor time possível" : "Melhor time escalado"),
+              el("p","o", lu.owner ?? "Escalação perfeita da rodada"));
+  const sal=lu.slots.reduce((a,b)=>a+(b.sal||0),0);
+  const tt=el("div");
+  tt.append(el("p","tot", pts(lu.total ?? lu.slots.reduce((a,b)=>a+b.pts,0))));
+  if(sal) tt.append(el("p","cap", sal+" de "+CAP+" de salário"));
+  h.append(left, tt);
+  p.append(h);
+  lu.slots.forEach(sl=>{
+    const r=el("div","lu-row"+(hits && hits.has(sl.name) ? " hit":""));
+    r.innerHTML=`<span class="slot">${sl.slot}</span>
+      <span class="nmp">${sl.name}${sl.team?`<span>${sl.team}</span>`:""}</span>
+      ${sl.sal?`<span class="sal">${sl.sal}</span>`:""}
+      <span class="pp">${pts(sl.pts)}</span>`;
+    p.append(r);
+  });
+  return p;
+}
+
+function cutRow(cls,label){
+  const tr=el("tr","cut "+cls);
+  const td=el("td",null,`<div class="cutline">${label}</div>`);
+  td.colSpan=9; tr.append(td); return tr;
+}
+
+function renderWeek(week){
+  const frag=document.createDocumentFragment();
+  const rows=ranked(week);
+  const max=rows[0].points, min=rows[rows.length-1].points;
+  const avg=rows.reduce((s,r)=>s+r.points,0)/rows.length;
+
+  const top=el("div","top3");
+  rows.slice(0,3).forEach((r,i)=>{
+    const c=el("div","win p"+(i+1));
+    c.append(el("div","medal",(i+1)+"º"));
+    const b=el("div");
+    b.append(el("p","nm",r.team),
+      el("p","ln",`<b>${pts(r.points)}</b> pts · ${brl(r.prize)} <span>(lucro ${brl(r.net)})</span>`));
+    c.append(b); top.append(c);
+  });
+  frag.append(top);
+
+  const wrap=el("div","tablewrap");
+  const t=el("table");
+  t.innerHTML=`<thead><tr><th class="l">#</th><th class="l">Time</th><th>Pontos</th>
+    <th class="l bar"></th><th>Prêmio</th><th>Lucro</th></tr></thead>`;
+  const tb=el("tbody");
+  rows.forEach(r=>{
+    const tr=el("tr"); if(r.prize>0) tr.classList.add("inmoney");
+    if(r.pos<=3) tr.classList.add("p"+r.pos);
+    const w=Math.round(((r.points-min*0.86)/(max-min*0.86))*100);
+    tr.innerHTML=`<td class="l pos">${r.pos}</td>
+      <td class="l team">${r.team}</td>
+      <td class="pts">${pts(r.points)}</td>
+      <td class="l bar"><span class="track"><span class="fill" style="width:${w}%"></span></span></td>
+      <td class="money${r.prize?'':' zero'}">${r.prize?brl(r.prize):"—"}</td>
+      <td class="money ${sign(r.net)}">${plus(r.net)}</td>`;
+    tb.append(tr);
+    if(r.pos===3) tb.append(cutRow("cut-money",""));
+    if(r.pos===5) tb.append(cutRow("cut-free",""));
+  });
+  t.append(tb); wrap.append(t);
+
+  const standings=()=>{
+    const box=el("div");
+    box.append(wrap, strip([
+      ["Média da liga", pts(avg), "pontos por time"],
+      ["Maior placar", pts(max), rows[0].team],
+      ["Menor placar", pts(min), rows[rows.length-1].team]
+    ]));
+    return box;
+  };
+
+  const L=week.lineups || {};
+  const sum=lu=>lu.total ?? lu.slots.reduce((a,b)=>a+b.pts,0);
+  const tabs=[{label:week.label, build:standings}];
+  if(L.best) tabs.push({label:"Melhor escalado", build:()=>lineupPanel(L.best,"best")});
+  if(L.optimal) tabs.push({label:"Melhor possível", build:()=>{
+    const hits=L.best ? new Set(L.best.slots.map(x=>x.name)) : null;
+    const out=el("div");
+    out.append(lineupPanel(L.optimal,"opt",hits));
+    if(L.best){
+      const diff=sum(L.optimal)-sum(L.best);
+      const shared=L.optimal.slots.filter(x=>hits.has(x.name)).length;
+      out.append(el("div","lu-foot",
+        `<b>${pts(diff)}</b> pontos ficaram na mesa entre a melhor escalação da liga e o time perfeito ·
+         <b>${shared}</b> de ${L.optimal.slots.length} jogadores do time perfeito estavam na escalação campeã.`));
+    }
+    return out;
+  }});
+  if(week.tops) tabs.push({label:"Melhores por posição", build:()=>topsPanel(week.tops)});
+  frag.append(folderCard(tabs));
+
+  return frag;
+}
+
+function renderOverall(){
+  const frag=document.createDocumentFragment();
+  const rows=overall();
+  const nw=WEEKS.length;
+
+  const top=el("div","top3");
+  rows.slice(0,3).forEach((r,i)=>{
+    const c=el("div","win p"+(i+1));
+    c.append(el("div","medal",(i+1)+"º"));
+    const b=el("div");
+    b.append(el("p","nm",r.team),
+      el("p","ln",`<b>${pts(r.points)}</b> pts · ${brl(r.seasonPrize)} <span>(se acabasse hoje)</span>`));
+    c.append(b); top.append(c);
+  });
+  frag.append(top);
+
+  const wrap=el("div","tablewrap");
+  const t=el("table");
+  t.innerHTML=`<thead><tr><th class="l">#</th><th class="l">Time</th><th>Pontos</th>
+    <th>Prêmios</th><th>Investido</th><th>Caixa</th><th>Se acabasse hoje</th></tr></thead>`;
+  const tb=el("tbody");
+  rows.forEach(r=>{
+    const tr=el("tr"); if(r.seasonPrize>0) tr.classList.add("inmoney");
+    if(r.pos<=3) tr.classList.add("p"+r.pos);
+    tr.innerHTML=`<td class="l pos">${r.pos}</td>
+      <td class="l team">${r.team}</td>
+      <td class="pts">${pts(r.points)}</td>
+      <td class="money${r.prizes?'':' zero'}">${r.prizes?brl(r.prizes):"—"}</td>
+      <td class="money zero">${brl(r.invested)}</td>
+      <td class="money ${sign(r.balance)}">${plus(r.balance)}</td>
+      <td class="money ${r.seasonPrize?sign(r.projected):'zero'}">${r.seasonPrize?brl(r.seasonPrize):"—"}${r.seasonPrize?` <span class="flat-v">(${plus(r.projected)})</span>`:""}</td>`;
+    tb.append(tr);
+    if(r.pos===5) tb.append(cutRow("cut-money",""));
+  });
+  t.append(tb); wrap.append(t);
+
+  const lead=rows[0];
+  const box=el("div");
+  box.append(wrap, strip([
+    ["Líder", lead.team, pts(lead.points)+" pts"],
+    ["Vantagem", pts(lead.points-rows[1].points), "sobre o 2º"],
+    ["Corte do top 5", pts(rows[4].points), "zona de prêmio geral"],
+    ["Distância 6º→5º", pts(rows[4].points-rows[5].points), "para entrar na zona"],
+    ["No azul", rows.filter(r=>r.balance>0).length + " de " + rows.length, "considerando só as semanais"],
+    ["Em jogo", brl(LEAGUE.seasonPrizes.reduce((a,b)=>a+b,0)), "premiação geral"]
+  ]));
+  frag.append(card("Classificação geral", nw+(nw===1?" semana":" semanas"), box));
+
+  const rules=el("div","rules");
+  rules.append(
+    ruleCol("Premiação semanal","14 × R$ 30 = R$ 420", LEAGUE.weeklyPrizes.map((p,i)=>{
+      const net=p-LEAGUE.entryWeek;
+      return [`${i+1}º`, `${brl(p)} <em>${net>0?"lucro "+brl(net):"freeroll"}</em>`];
+    })),
+    ruleCol("Premiação geral","14 × R$ 150 = R$ 2.100", LEAGUE.seasonPrizes.map((p,i)=>[`${i+1}º`, brl(p)]))
+  );
+  frag.append(card("Regras da premiação","",rules));
+  return frag;
+}
+
+function ruleCol(title,pot,rows){
+  const c=el("div","rulecol");
+  c.append(el("h3",null,title), el("p","pot",pot));
+  rows.forEach(([k,v])=>{
+    const r=el("div","rulerow");
+    r.append(el("span","k",k), el("span","v",v));
+    c.append(r);
+  });
+  return c;
+}
+
+const tabsEl=document.getElementById("tabs");
+const panelEl=document.getElementById("panel");
+const views=[...WEEKS.map(w=>({id:"w"+w.n,label:w.label,render:()=>renderWeek(w)})),
+             {id:"geral",label:"Geral",render:renderOverall}];
+views.forEach(v=>{
+  const b=el("button","tab",v.label);
+  b.type="button"; b.setAttribute("role","tab"); b.dataset.id=v.id;
+  b.addEventListener("click",()=>select(v.id));
+  tabsEl.append(b);
+});
+function select(id){
+  const v=views.find(x=>x.id===id);
+  [...tabsEl.children].forEach(b=>b.setAttribute("aria-selected",String(b.dataset.id===id)));
+  panelEl.replaceChildren(v.render());
+}
+select("w"+WEEKS[WEEKS.length-1].n);
+document.getElementById("sub").innerHTML =
+  `14 times · buy-in semanal R$ 30 · buy-in geral R$ 150 · última rodada: <b>${WEEKS[WEEKS.length-1].label}</b>`;
+</script>
