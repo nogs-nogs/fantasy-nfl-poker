@@ -1,4 +1,5 @@
 <title>NFL and Poker 2026</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M9.2 38.8C6.4 28.4 8 17.6 12.8 12.8 17.6 8 28.4 6.4 38.8 9.2c2.8 10.4 1.2 21.2-3.6 26-4.8 4.8-15.6 6.4-26 3.6Z' fill='none' stroke='%23D81F26' stroke-width='3.2' stroke-linejoin='round'/%3E%3Cpath d='M18.6 29.4 29.4 18.6' fill='none' stroke='%23D81F26' stroke-width='2.6' stroke-linecap='round'/%3E%3Cpath d='M20.4 24.2 23.8 27.6M23.8 20.8 27.2 24.2M17 27.6 20.4 31M27.2 17.4 30.6 20.8' fill='none' stroke='%23D81F26' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 :root{
   --page:#F5F6F7;
@@ -64,8 +65,11 @@ p{margin:0}
 .leaguehead{background:var(--card);border-bottom:1px solid var(--line)}
 .leaguehead .wrap{padding-top:20px;padding-bottom:0}
 .crest{display:flex;align-items:center;gap:12px}
-.crest .badge{width:44px;height:44px;border-radius:50%;background:var(--purple);color:#fff;
-  display:grid;place-items:center;font-weight:800;font-size:15px;letter-spacing:-.02em;flex:none}
+.crest .badge{width:44px;height:44px;display:grid;place-items:center;flex:none;color:#D81F26}
+:root:not([data-theme="light"]) .crest .badge{color:#D81F26}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .crest .badge{color:#FF5A52}}
+:root[data-theme="dark"] .crest .badge{color:#FF5A52}
+.crest .badge svg{display:block}
 .leaguehead h1{font-size:24px}
 .leaguehead .sub{font-size:13px;color:var(--ink-2);margin-top:1px}
 
@@ -145,6 +149,23 @@ tr.cut td{padding:0;border-bottom:none;background:var(--card)}
   td,th{padding:10px 9px}
   .team{font-size:14px}
 }
+
+/* ---------- rodadas empilhadas ---------- */
+.round{margin-bottom:14px}
+.rhead{display:flex;align-items:center;flex-wrap:wrap;gap:4px 10px;width:100%;
+  padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:8px;
+  box-shadow:var(--shadow);cursor:pointer;text-align:left;font:inherit;color:inherit}
+.rhead:hover{background:var(--card-2)}
+.rhead:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.round.open .rhead{margin-bottom:12px}
+.chev{flex:none;display:grid;place-items:center;width:18px;height:18px;color:var(--ink-3);
+  transform:rotate(-90deg);transition:transform .15s ease}
+.round.open .chev{transform:none;color:var(--blue)}
+.rname{font-size:15px;font-weight:700}
+.round.open .rname{color:var(--ink)}
+.rsum{margin-left:auto;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.rsum b{color:var(--ink);font-weight:600}
+@media(max-width:560px){.rsum{margin-left:28px;flex-basis:100%}}
 
 /* ---------- pastas ---------- */
 .folder{margin-bottom:14px}
@@ -247,7 +268,7 @@ footer p + p{margin-top:6px}
 
 <header class="leaguehead"><div class="wrap">
   <div class="crest">
-    <div class="badge">NP</div>
+    <div class="badge"><svg class="ball" viewBox="0 0 48 48" width="40" height="40" role="img" aria-label="Bola de futebol americano"><path d="M9.2 38.8C6.4 28.4 8 17.6 12.8 12.8 17.6 8 28.4 6.4 38.8 9.2c2.8 10.4 1.2 21.2-3.6 26-4.8 4.8-15.6 6.4-26 3.6Z" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/><path d="M18.6 29.4 29.4 18.6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M20.4 24.2 23.8 27.6M23.8 20.8 27.2 24.2M17 27.6 20.4 31M27.2 17.4 30.6 20.8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg></div>
     <div>
       <h1>NFL and Poker 2026</h1>
       <p class="sub" id="sub"></p>
@@ -452,7 +473,39 @@ function cutRow(cls,label){
   td.colSpan=9; tr.append(td); return tr;
 }
 
-function renderWeek(week){
+const CHEV='<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">'+
+  '<path d="M3 6l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" '+
+  'stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function renderRounds(){
+  const frag=document.createDocumentFragment();
+  [...WEEKS].reverse().forEach((w,i)=>frag.append(roundSection(w, i===0)));
+  return frag;
+}
+
+function roundSection(week, open){
+  const sec=el("section","round"+(open?" open":""));
+  const rows=ranked(week);
+  const head=el("button","rhead");
+  head.type="button"; head.setAttribute("aria-expanded",String(open));
+  head.innerHTML=`<span class="chev">${CHEV}</span><span class="rname">${week.label}</span>
+    <span class="rsum">campeão <b>${rows[0].team}</b> · ${pts(rows[0].points)} pts · ${rows.length} times</span>`;
+  const body=el("div","rbody");
+  let built=false;
+  const build=()=>{ if(!built){ body.append(weekBody(week)); built=true; } };
+  if(open) build(); else body.hidden=true;
+  head.addEventListener("click",()=>{
+    const now=head.getAttribute("aria-expanded")!=="true";
+    head.setAttribute("aria-expanded",String(now));
+    sec.classList.toggle("open",now);
+    if(now) build();
+    body.hidden=!now;
+  });
+  sec.append(head,body);
+  return sec;
+}
+
+function weekBody(week){
   const frag=document.createDocumentFragment();
   const rows=ranked(week);
   const max=rows[0].points, min=rows[rows.length-1].points;
@@ -596,7 +649,7 @@ function ruleCol(title,pot,rows){
 
 const tabsEl=document.getElementById("tabs");
 const panelEl=document.getElementById("panel");
-const views=[...WEEKS.map(w=>({id:"w"+w.n,label:w.label,render:()=>renderWeek(w)})),
+const views=[{id:"rodadas",label:"Rodadas",render:renderRounds},
              {id:"geral",label:"Geral",render:renderOverall}];
 views.forEach(v=>{
   const b=el("button","tab",v.label);
@@ -609,7 +662,7 @@ function select(id){
   [...tabsEl.children].forEach(b=>b.setAttribute("aria-selected",String(b.dataset.id===id)));
   panelEl.replaceChildren(v.render());
 }
-select("w"+WEEKS[WEEKS.length-1].n);
+select("rodadas");
 document.getElementById("sub").innerHTML =
   `14 times · buy-in semanal R$ 30 · buy-in geral R$ 150 · última rodada: <b>${WEEKS[WEEKS.length-1].label}</b>`;
 </script>
