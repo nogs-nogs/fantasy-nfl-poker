@@ -18,6 +18,18 @@ A classificação geral soma os pontos de todas as semanas.
 
 ## Como adicionar uma semana
 
+**Jeito automático (recomendado):** `tools/fantasy_round.py` faz tudo — baixa a
+rodada do Yahoo, resolve o time perfeito e atualiza este arquivo. O passo a
+passo está em [tools/README.md](tools/README.md).
+
+```bash
+cd tools
+python3 fantasy_round.py --contest <contestId> --week <n> \
+    --lineup-file <texto-da-pagina-do-campeao.txt> --patch ../index.html
+```
+
+**Jeito manual:**
+
 No bloco `WEEKS` dentro de `index.html`, copie um objeto de semana e preencha:
 
 ```js
