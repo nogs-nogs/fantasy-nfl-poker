@@ -1,5 +1,8 @@
 # Como levantar uma rodada
 
+> Vai pedir isso para uma IA? A mensagem pronta está em
+> [PROMPT-INICIAL.md](PROMPT-INICIAL.md).
+
 Runbook para atualizar o ranking depois que uma rodada termina. Escrito para
 ser seguido por qualquer pessoa — ou por qualquer assistente de IA com acesso a
 um terminal. Não depende de nenhum serviço além do próprio Yahoo.
