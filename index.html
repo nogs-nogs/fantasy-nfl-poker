@@ -196,9 +196,9 @@ tr.cut td{padding:0;border-bottom:none;background:var(--card)}
   text-transform:uppercase;letter-spacing:.03em;
   padding:9px 16px 8px;color:var(--ink-2);background:var(--card-2);
   border:1px solid var(--line);border-radius:8px 8px 0 0;margin-bottom:-1px;position:relative}
-.ftab:hover{color:var(--ink)}
-.ftab[aria-selected="true"]{background:var(--card);color:var(--accent);z-index:2;font-weight:400;
-  border-bottom-color:var(--card);box-shadow:inset 0 3px 0 var(--accent)}
+.ftab:hover{color:var(--accent)}
+.ftab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--offwhite);z-index:2;font-weight:400}
+.ftab[aria-selected="true"]:hover{color:var(--offwhite)}
 .ftab:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
 .folder-body{background:var(--card);border:1px solid var(--line);border-radius:0 8px 8px 8px;
   box-shadow:var(--shadow);overflow:hidden;position:relative}
@@ -508,6 +508,61 @@ const WEEKS = [
     DEF:[{name:"Minnesota Vikings",    team:"MIN", sal:19, pts:17.00},
          {name:"Jacksonville Jaguars", team:"JAX", sal:15, pts:16.00},
          {name:"Los Angeles Chargers", team:"LAC", sal:10, pts:14.00} ]
+  }},
+  { n:4, label:"Semana 4", results:[
+    ["Andrev-OP38R", 166.16],
+    ["LuisHPs", 156.36],
+    ["Pandajets", 147.12],
+    ["v1tti", 136.78],
+    ["BAYS", 128.48],
+    ["Andre_Luiz-R5BVL", 108.48],
+    ["jacenir-14BF9C", 97.18],
+    ["MarcusjJr", 93.98],
+    ["Tudazul", 89.52],
+    ["RaphaLuno", 89.28],
+    ["Yago", 82.14],
+    ["ZangROETHLISBERGER", 77.88],
+    ["Goiano", 69.88],
+    ["DarkRams", 65.62]
+  ], lineups:{
+    best:{ owner:"Andrev-OP38R", slots:[
+      {slot:"QB", name:"Bryce Young", team:"CAR", sal:33, pts:21.46},
+      {slot:"RB", name:"Quinshon Judkins", team:"CLE", sal:19, pts:18.60},
+      {slot:"RB", name:"Alvin Kamara", team:"NO", sal:15, pts:20.30},
+      {slot:"WR", name:"Matthew Golden", team:"GB", sal:23, pts:10.20},
+      {slot:"WR", name:"Tetairoa McMillan", team:"CAR", sal:23, pts:38.20},
+      {slot:"WR", name:"Devaughn Vele", team:"NO", sal:17, pts:14.40},
+      {slot:"TE", name:"Tyler Warren", team:"IND", sal:19, pts:6.60},
+      {slot:"FLEX", name:"Kenneth Walker III", team:"KC", sal:39, pts:30.40},
+      {slot:"DEF", name:"Baltimore Ravens", team:"BAL", sal:12, pts:6.00}
+    ]},
+    optimal:{ slots:[
+      {slot:"QB", name:"Drake Maye", team:"NE", sal:27, pts:27.16},
+      {slot:"RB", name:"Kyren Williams", team:"LAR", sal:34, pts:31.70},
+      {slot:"RB", name:"Javonte Williams", team:"DAL", sal:31, pts:28.80},
+      {slot:"WR", name:"Tetairoa McMillan", team:"CAR", sal:23, pts:38.20},
+      {slot:"WR", name:"CeeDee Lamb", team:"DAL", sal:35, pts:32.80},
+      {slot:"WR", name:"Tyquan Thornton", team:"KC", sal:10, pts:25.60},
+      {slot:"TE", name:"T.J. Hockenson", team:"MIN", sal:11, pts:18.40},
+      {slot:"FLEX", name:"Emanuel Wilson", team:"SEA", sal:10, pts:25.50},
+      {slot:"DEF", name:"New York Giants", team:"NYG", sal:13, pts:14.00}
+    ]}
+  }, tops:{
+    QB:[ {name:"Drake Maye", team:"NE", sal:27, pts:27.16},
+         {name:"Joe Burrow", team:"CIN", sal:37, pts:25.72},
+         {name:"Aaron Rodgers", team:"PIT", sal:26, pts:23.96} ],
+    RB:[ {name:"Kyren Williams", team:"LAR", sal:34, pts:31.70},
+         {name:"Kenneth Walker III", team:"KC", sal:39, pts:30.40},
+         {name:"Javonte Williams", team:"DAL", sal:31, pts:28.80} ],
+    WR:[ {name:"Tetairoa McMillan", team:"CAR", sal:23, pts:38.20},
+         {name:"CeeDee Lamb", team:"DAL", sal:35, pts:32.80},
+         {name:"Nico Collins", team:"HOU", sal:30, pts:27.30} ],
+    TE:[ {name:"T.J. Hockenson", team:"MIN", sal:11, pts:18.40},
+         {name:"Sam LaPorta", team:"DET", sal:18, pts:18.40},
+         {name:"Brock Bowers", team:"LV", sal:26, pts:17.60} ],
+    DEF:[ {name:"New York Giants", team:"NYG", sal:13, pts:14.00},
+         {name:"Seattle Seahawks", team:"SEA", sal:16, pts:12.00},
+         {name:"Arizona Cardinals", team:"ARI", sal:11, pts:9.00} ]
   }}
 ];
 
