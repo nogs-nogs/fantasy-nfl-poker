@@ -43,6 +43,10 @@ CAP = 200
 SLOTS = ["QB", "RB", "RB", "WR", "WR", "WR", "TE", "FLEX", "DEF"]
 # o Yahoo usa siglas próprias para três times; normalizamos para exibição
 TEAM_FIX = {"LA": "LAR", "JAC": "JAX"}
+# "Jassa" é uma segunda conta do mesmo jogador do "jacenir-14BF9C" — nunca
+# escalam nas duas contas na mesma rodada, então a pontuação de uma entra
+# somada na outra e só o apelido canônico aparece na página.
+TEAM_ALIAS = {"Jassa": "jacenir-14BF9C"}
 
 
 def fetch(path):
@@ -80,7 +84,20 @@ def get_standings(contest_id):
     rows = [{"team": e["user"]["nickname"], "pts": round(e["score"], 2),
              "rank": e["rank"], "entryId": e["id"]}
             for e in data["entries"]["result"]]
-    return sorted(rows, key=lambda r: r["rank"])
+    merged = {}
+    for r in rows:
+        canon = TEAM_ALIAS.get(r["team"], r["team"])
+        m = merged.get(canon)
+        if m is None:
+            merged[canon] = {"team": canon, "pts": r["pts"], "entryId": r["entryId"]}
+        else:
+            m["pts"] = round(m["pts"] + r["pts"], 2)
+            if r["pts"] > 0:          # a conta que de fato jogou essa rodada
+                m["entryId"] = r["entryId"]
+    out = sorted(merged.values(), key=lambda r: -r["pts"])
+    for i, r in enumerate(out, 1):
+        r["rank"] = i
+    return out
 
 
 def best_lineup(pool):
