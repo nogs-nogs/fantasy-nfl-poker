@@ -783,6 +783,62 @@ const WEEKS = [
     DEF:[ {name:"Jacksonville Jaguars", team:"JAX", sal:15, pts:20.00},
          {name:"Pittsburgh Steelers", team:"PIT", sal:18, pts:19.00},
          {name:"Tampa Bay Buccaneers", team:"TB", sal:15, pts:18.00} ]
+  }},
+  { n:9, label:"Semana 9", results:[
+    ["Pandajets", 113.22],
+    ["DarkRams", 108.06],
+    ["Tudazul", 103.34],
+    ["BAYS", 101.88],
+    ["v1tti", 92.48],
+    ["RaphaLuno", 92.08],
+    ["Goiano", 87.88],
+    ["MarcusjJr", 87.46],
+    ["Yago", 81.24],
+    ["Andre_Luiz-R5BVL", 76.18],
+    ["jacenir-14BF9C", 74.74],
+    ["LuisHPs", 71.90],
+    ["ZangROETHLISBERGER", 63.80],
+    ["Andrev-OP38R", 56.00],
+    ["Jassa", 0.00]
+  ], lineups:{
+    best:{ owner:"Pandajets", slots:[
+      {slot:"QB", name:"Malik Willis", team:"MIA", sal:28, pts:4.82},
+      {slot:"RB", name:"Kenneth Walker III", team:"KC", sal:38, pts:34.30},
+      {slot:"RB", name:"Christian McCaffrey", team:"SF", sal:38, pts:21.70},
+      {slot:"WR", name:"Caleb Douglas", team:"MIA", sal:18, pts:10.00},
+      {slot:"WR", name:"Jalen Coker", team:"CAR", sal:18, pts:4.60},
+      {slot:"WR", name:"Demarcus Robinson", team:"SF", sal:14, pts:3.70},
+      {slot:"TE", name:"AJ Barner", team:"SEA", sal:11, pts:14.00},
+      {slot:"FLEX", name:"Zach Charbonnet", team:"SEA", sal:18, pts:9.10},
+      {slot:"DEF", name:"Kansas City Chiefs", team:"KC", sal:16, pts:11.00}
+    ]},
+    optimal:{ slots:[
+      {slot:"QB", name:"C.J. Stroud", team:"HOU", sal:34, pts:36.36},
+      {slot:"RB", name:"Kenneth Walker III", team:"KC", sal:38, pts:34.30},
+      {slot:"RB", name:"Justice Hill", team:"BAL", sal:12, pts:16.70},
+      {slot:"WR", name:"CeeDee Lamb", team:"DAL", sal:34, pts:28.50},
+      {slot:"WR", name:"Matthew Golden", team:"GB", sal:29, pts:27.40},
+      {slot:"WR", name:"Kayshon Boutte", team:"HOU", sal:10, pts:26.50},
+      {slot:"TE", name:"Darren Waller", team:"CAR", sal:12, pts:19.00},
+      {slot:"FLEX", name:"Tank Dell", team:"HOU", sal:13, pts:18.50},
+      {slot:"DEF", name:"San Francisco 49ers", team:"SF", sal:13, pts:17.00}
+    ]}
+  }, tops:{
+    QB:[ {name:"C.J. Stroud", team:"HOU", sal:34, pts:36.36},
+         {name:"Jordan Love", team:"GB", sal:38, pts:36.18},
+         {name:"Joe Burrow", team:"CIN", sal:40, pts:29.54} ],
+    RB:[ {name:"Kenneth Walker III", team:"KC", sal:38, pts:34.30},
+         {name:"Bucky Irving", team:"TB", sal:32, pts:26.50},
+         {name:"Bijan Robinson", team:"ATL", sal:36, pts:23.70} ],
+    WR:[ {name:"CeeDee Lamb", team:"DAL", sal:34, pts:28.50},
+         {name:"Puka Nacua", team:"LAR", sal:40, pts:28.00},
+         {name:"Matthew Golden", team:"GB", sal:29, pts:27.40} ],
+    TE:[ {name:"Darren Waller", team:"CAR", sal:12, pts:19.00},
+         {name:"Brock Bowers", team:"LV", sal:29, pts:18.80},
+         {name:"Travis Kelce", team:"KC", sal:18, pts:15.30} ],
+    DEF:[ {name:"San Francisco 49ers", team:"SF", sal:13, pts:17.00},
+         {name:"Buffalo Bills", team:"BUF", sal:13, pts:15.00},
+         {name:"Chicago Bears", team:"CHI", sal:15, pts:14.00} ]
   }}
 ];
 
@@ -1088,5 +1144,5 @@ function select(id){
 }
 select("rodadas");
 document.getElementById("sub").innerHTML =
-  `14 times · buy-in semanal R$ 30 · buy-in geral R$ 150 · última rodada: <b>${WEEKS[WEEKS.length-1].label}</b>`;
+  `${WEEKS[WEEKS.length-1].results.length} times · buy-in semanal R$ 30 · buy-in geral R$ 150 · última rodada: <b>${WEEKS[WEEKS.length-1].label}</b>`;
 </script>
